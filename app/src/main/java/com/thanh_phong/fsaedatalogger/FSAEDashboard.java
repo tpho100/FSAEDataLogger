@@ -1,6 +1,5 @@
 package com.thanh_phong.fsaedatalogger;
 
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,37 +7,54 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 
 /**
  * Created by Thanh-Phong on 3/25/2016.
  */
 public class FSAEDashboard extends View {
 
+    //Mobile device specifications, used for general layout
     private int screenResolutionX = 1280;
     private int screenResolutionY = 720;
 
-    /*
-        Parameters for adjusting main arc geometry
-     */
-    private RectF arcMeter1;
-    private RectF arcMeter2;
-    private RectF arcMeter3;
-    private RectF arcOval; //Box drawn around arc
-    private RectF ticksOval; //Oval for ticks
-    private RectF barsOval; //Oval for bars
-    private RectF genericArcOval1;
-    private RectF genericArcOval2;
-    private RectF genericArcOval3;
-    private RectF genericArcOval4;
+    //Flags to prevent the canvas from redrawing objects that do not need to be re-drawn each frame
+    private boolean ticksDrawn = false;
+    private boolean arcSweepDrawn = false;
+    private boolean genericArc1Drawn = false;
+    private boolean genericArc2Drawn = false;
+    private boolean genericArc3Drawn = false;
+    private boolean genericArc4Drawn = false;
+    private boolean canvasCleared = false;
 
+    /*
+        Arcs and ovals are drawn using inscribed circles. The polygon will always be a rectangle.
+        These rectangle objects create the boundaries for the circle.
+     */
+
+    //These are arcs with very wide strokes. Used to fill the "meter".
+    private RectF arcMeter1; //Yellow
+    private RectF arcMeter2; //Green
+    private RectF arcMeter3; //Red
+
+    private RectF arcOval; //Box drawn around main tachometer arc
+    private RectF ticksOval; //Oval for ticks on the tachometer
+
+    private RectF barsOval; //For bars to fill the "meter". Either use this or arcMeter. not both.
+
+    //Used to display general information
+    private RectF genericArcOval1; //Oil pressure
+    private RectF genericArcOval2; //Coolant temp
+    private RectF genericArcOval3; //TPS
+    private RectF genericArcOval4; //Anything you want
+
+    //Used to fill the genericArc "meters"
     private RectF genericArcMeter1;
     private RectF genericArcMeter2;
     private RectF genericArcMeter3;
     private RectF genericArcMeter4;
 
+    //Main tachometer arc parameters
     private float arcStartAngle = 240;
     private float arcSweepAngle = 60;
     private float arcStrokeWidth = 2;
@@ -49,6 +65,7 @@ public class FSAEDashboard extends View {
 
     private float genericStrokeWidth = 25;
     private float genericOffset = 25;
+
     /*
         Number of ticks for RPM. Currently set to 1 tick per 1000 RPM
      */
@@ -125,6 +142,7 @@ public class FSAEDashboard extends View {
     private float genericStartAngle = 130;
     private float genericSweepAngle = 280;
     private float genericArcDiameter = 150;
+
     private float genericArcPositionX1 = screenResolutionX - genericArcDiameter + 50;
     private float genericArcPositionY1 = 100 + genericArcDiameter;
 
@@ -467,7 +485,11 @@ public class FSAEDashboard extends View {
         String oilPressureString = String.valueOf((int) oilpressure);
 
         canvas.drawArc(genericArcMeter1,genericStartAngle,genericSweepAngle*oilpressure/maxOilPressure,false,oilPressurePaint);
-        canvas.drawArc(genericArcOval1, genericStartAngle, genericSweepAngle, false, genericPaint);
+
+        if(!genericArc1Drawn){
+            canvas.drawArc(genericArcOval1, genericStartAngle, genericSweepAngle, false, genericPaint);
+            genericArc1Drawn = true;
+        }
         canvas.drawText(oilPressureString,genericArcPositionX1- sensorPaint.measureText(oilPressureString)/2,genericArcMeter1.centerY()+15,sensorPaint);
     }
 
@@ -475,7 +497,11 @@ public class FSAEDashboard extends View {
         String coolantTemperatureString = String.valueOf((int) coolantTemperature);
 
         canvas.drawArc(genericArcMeter2,genericStartAngle,genericSweepAngle*coolantTemperature/maxCoolantTemperature,false,coolantTempPaint);
-        canvas.drawArc(genericArcOval2, genericStartAngle,genericSweepAngle,false,genericPaint);
+
+        if(!genericArc2Drawn){
+            canvas.drawArc(genericArcOval2, genericStartAngle,genericSweepAngle,false,genericPaint);
+        }
+
         canvas.drawText(coolantTemperatureString, genericArcPositionX2 - sensorPaint.measureText(coolantTemperatureString)/2, genericArcMeter2.centerY()+15, sensorPaint);
     }
 
@@ -483,8 +509,12 @@ public class FSAEDashboard extends View {
         String TPSString = String.valueOf((int) TPS);
 
         canvas.drawArc(genericArcMeter3,genericStartAngle,genericSweepAngle*TPS/maxTPS,false,TPSPaint);
-        canvas.drawArc(genericArcOval3, genericStartAngle,genericSweepAngle,false,genericPaint);
-        canvas.drawText(TPSString, genericArcPositionX3 - sensorPaint.measureText(TPSString)/2, genericArcMeter3.centerY()+15, sensorPaint);
+
+        if(!genericArc3Drawn){
+            canvas.drawArc(genericArcOval3, genericStartAngle,genericSweepAngle,false,genericPaint);
+        }
+
+        canvas.drawText(TPSString, genericArcPositionX3 - sensorPaint.measureText(TPSString) / 2, genericArcMeter3.centerY() + 15, sensorPaint);
     }
 
     private void drawGenericArcMeter4(Canvas canvas){
@@ -498,9 +528,22 @@ public class FSAEDashboard extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawColor(Color.BLACK); //Clears canvas
-        drawBackgroundAndArc(canvas);
-        drawTicks(canvas);
+
+        if(!canvasCleared){
+            canvas.drawColor(Color.BLACK); //Clears canvas
+            canvasCleared = true;
+        }
+
+        if(!arcSweepDrawn){
+            drawBackgroundAndArc(canvas);
+            arcSweepDrawn = true;
+        }
+
+        if(!ticksDrawn){
+            drawTicks(canvas);
+            ticksDrawn = true;
+        }
+
         //drawBars(canvas);
         //fillBars(canvas, rpmPercentage);
         drawArcMeter(canvas);
