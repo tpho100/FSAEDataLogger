@@ -27,12 +27,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         dashboard = new FSAEDashboard(this);
         setContentView(R.layout.activity_main);
-
 
         connectButton = (Button) findViewById(R.id.connectButton);
         myLabel = (TextView) findViewById(R.id.label);
