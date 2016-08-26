@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Bluetooth/Bluetooth.iml" filepath="$PROJECT_DIR$/Bluetooth/Bluetooth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Android-BluetoothSPPLibrary/Android-BluetoothSPPLibrary.iml" filepath="$PROJECT_DIR$/Android-BluetoothSPPLibrary/Android-BluetoothSPPLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/FSAEDataLogger.iml" filepath="$PROJECT_DIR$/FSAEDataLogger.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Android-BluetoothSPPLibrary/library/library.iml" filepath="$PROJECT_DIR$/Android-BluetoothSPPLibrary/library/library.iml" />
     </modules>
   </component>
 </project>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,18 +7,9 @@
     tools:context="com.thanh_phong.fsaedatalogger.MainActivity">
 
     <com.thanh_phong.fsaedatalogger.FSAEDashboard
+        android:id="@+id/customView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <Button
-        android:id="@+id/connectButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="475dp"
-        android:text="Open Bluetooth" />
 
     <TextView
         android:id="@+id/label"
@@ -29,17 +19,136 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="14dp"
         android:layout_marginTop="450dp"
-        android:text="DATA"
+        android:text="NOT CONNECTED"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#F00"/>
+        android:textColor="#FFF"/>
 
-    <!--<ImageView-->
-        <!--android:id="@+id/airview"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_marginLeft="275dp"-->
-        <!--android:layout_marginTop="100dp"-->
-        <!--android:src="@drawable/coolanttemp1" />-->
+    <TextView
+        android:id="@+id/linearAccel0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="600dp"
+        android:layout_marginTop="200dp"
+        android:text="ACCEL_X: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFF"/>
 
+    <TextView
+    android:id="@+id/linearAccel1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginLeft="600dp"
+    android:layout_marginTop="225dp"
+    android:text="ACCEL_Y: "
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="#FFF"/>
+
+    <TextView
+        android:id="@+id/linearAccel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="600dp"
+        android:layout_marginTop="250dp"
+        android:text="ACCEL_Z: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFF"/>
+
+    <TextView
+        android:id="@+id/gyro0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="600dp"
+        android:layout_marginTop="290dp"
+        android:text="GYRO_X: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFF"/>
+
+    <TextView
+        android:id="@+id/gyro1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="600dp"
+        android:layout_marginTop="315dp"
+        android:text="GYRO_Y: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFF"/>
+
+    <TextView
+        android:id="@+id/gyro2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="600dp"
+        android:layout_marginTop="340dp"
+        android:text="GYRO_Z: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFF"/>
+
+    <TextView
+        android:id="@+id/gpsSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15sp"
+        android:layout_marginTop="0sp"
+        android:textSize="100sp"
+        android:textStyle="italic"
+        android:textColor="#FFF"/>
+
+
+    <TextView
+        android:id="@+id/teethCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="700dp"
+        android:layout_marginTop="225dp"
+        android:text="# Teeth WSS: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFF"/>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="480dp">
+
+        <Button
+            android:id="@+id/connectButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="CONNECT&#10;ECU" />
+
+        <Button
+            android:id="@+id/startDatalogButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="START&#10;DATALOG" />
+
+        <Spinner
+            android:id="@+id/userList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

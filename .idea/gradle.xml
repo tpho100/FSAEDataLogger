@@ -10,7 +10,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Bluetooth" />
+            <option value="$PROJECT_DIR$/Android-BluetoothSPPLibrary" />
+            <option value="$PROJECT_DIR$/Android-BluetoothSPPLibrary/library" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

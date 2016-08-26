@@ -1,1 +1,2 @@
-include ':app', 'Bluetooth'
+include ':app'
+include 'Android-BluetoothSPPLibrary:library'
