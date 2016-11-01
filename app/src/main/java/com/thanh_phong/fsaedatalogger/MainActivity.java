@@ -173,6 +173,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         myLabel.setText("LISTENING");
                         connectButton.setBackgroundColor(Color.GREEN);
                     }
+                    else
+                    {
+                        myLabel.setText("BLUETOOTH NOT ENABLED IN SETTINGS");
+                    }
 
 
                 } catch(Exception e) {
