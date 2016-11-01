@@ -103,7 +103,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     linearAccel2.setText(String.format("%.2f",event.values[2]));
 
                 } else if(sensor.getType() == Sensor.TYPE_GYROSCOPE){
-
+                    gyro0.setText(String.format("%.2f",event.values[0]));
+                    gyro1.setText(String.format("%.2f",event.values[1]));
+                    gyro2.setText(String.format("%.2f",event.values[2]));
                 }
             }
 
