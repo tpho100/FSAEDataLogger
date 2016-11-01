@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         gpsSpeed = (TextView) findViewById(R.id.gpsSpeed);
         String speed = String.valueOf(0);
         SpannableString ss1 = new SpannableString(speed+"MPH");
-        ss1.setSpan(new RelativeSizeSpan(.25f),speed.length(),speed.length()+3,0);
+        ss1.setSpan(new RelativeSizeSpan(.25f), speed.length(), speed.length() + 3, 0);
         gpsSpeed.setText(ss1);
 
         customView = findViewById(R.id.customView);
@@ -146,35 +146,38 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View v) {
                 try{
-                    mBlue.Connect();
-                    if(mBlue.isAlive()){
-                        Thread.sleep(500);
-                        //myLabel.setText("ATTEMPTING TO LISTEN...");
+                    if(mBlue.isBluetoothEnabled()) {
+                        mBlue.Connect();
+                        if(mBlue.isAlive()){
+                            Thread.sleep(500);
+                            //myLabel.setText("ATTEMPTING TO LISTEN...");
+                        }
+
+                        Toast.makeText(MainActivity.this, "Connected!", Toast.LENGTH_SHORT).show();
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                while(mBlue.isAlive()){
+                                    value = mBlue.msg;
+
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            pe3.insertData(value);
+                                            //myLabel.setText(value);
+                                            customView.invalidate();
+
+                                        }
+                                    });
+                                }
+                            }
+                        };
+                        new Thread(runnable).start();
+                        myLabel.setText("LISTENING");
+                        connectButton.setBackgroundColor(Color.GREEN);
                     }
 
-                    Toast.makeText(MainActivity.this, "Connected!", Toast.LENGTH_SHORT).show();
-                    Runnable runnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            while(mBlue.isAlive()){
-                                value = mBlue.msg;
-
-                                handler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        pe3.insertData(value);
-                                        //myLabel.setText(value);
-                                        customView.invalidate();
-
-                                    }
-                                });
-                            }
-                        }
-                    };
-                    new Thread(runnable).start();
-                    myLabel.setText("LISTENING");
-                    connectButton.setBackgroundColor(Color.GREEN);
 
                 } catch(Exception e) {
                     myLabel.setText("CONNECTION FAILED");
