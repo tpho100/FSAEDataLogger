@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private float lastY = 0;
     private float lastZ = 0;
 
-    private String[] users = {"Chris_Robinson","Spencer_Lennon","Samir_Abusen","Michael_Austin","Jeffery_Bloomer","Matthew_Honickman"
-            ,"David_Lasselle","Jacob_Lyon","Jacob_Muench","Wyatt_Wolf"};
+    private String[] users = {"Chris_Robinson","Spencer_Lennon","Michael_Austin","Jeffery_Bloomer","Matthew_Honickman"
+            ,"David_Lasselle","Jacob_Lyon"};
 
 
     @Override
