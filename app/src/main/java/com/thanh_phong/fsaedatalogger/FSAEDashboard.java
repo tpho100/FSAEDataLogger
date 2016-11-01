@@ -124,8 +124,6 @@ public class FSAEDashboard extends View {
 
     //BATTERY VOLTAGE
     private float batteryTextSize = 35;
-    private String batteryTextValue = "";
-    private String batteryTextLabel = "V";
 
     //SPEEDOMETER
     private float TopSpeed = 0;
@@ -142,10 +140,6 @@ public class FSAEDashboard extends View {
 
     private float gearTextPositionX = screenResolutionX - 145;
     private float gearTextPositionY = 135;
-    private float gearTextXOffset = -25;
-
-    private float miscellaneousTextX = 50;
-    private float miscellaneousTextY1 = gearTextPositionY;
 
     private float genericStartAngle = 130;
     private float genericSweepAngle = 280;
