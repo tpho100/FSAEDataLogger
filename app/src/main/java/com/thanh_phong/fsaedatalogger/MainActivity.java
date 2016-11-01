@@ -60,12 +60,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     boolean loggingData = false;
     private final Handler handler = new Handler();
 
+    // used for gyro and accelerometer data
     private SensorManager mSensorManager;
     private SensorEventListener mSensorListener;
-
-    private float currentX = 0;
-    private float currentY = 0;
-    private float currentZ = 0;
 
     private float deltaX = 0;
     private float deltaY = 0;
@@ -83,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         pe3 = PE3ECUCANBus.getInstance();
         dashboard = new FSAEDashboard(this);
@@ -152,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         mBlue.Connect();
                         if(mBlue.isAlive()){
                             Thread.sleep(500);
-                            //myLabel.setText("ATTEMPTING TO LISTEN...");
                         }
 
                         Toast.makeText(MainActivity.this, "Connected!", Toast.LENGTH_SHORT).show();
@@ -167,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                         public void run() {
 
                                             pe3.insertData(value);
-                                            //myLabel.setText(value);
                                             customView.invalidate();
 
                                         }
@@ -331,9 +325,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             SpannableString ss1 = new SpannableString(speed+"MPH");
             ss1.setSpan(new RelativeSizeSpan(.25f),speed.length(),speed.length()+3,0);
             gpsSpeed.setText(ss1);
-
-            //customView.invalidate();
-            //System.out.println("GPS location changed: "+dashboard.GPSSpeed);
         }
 
     }
