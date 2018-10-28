@@ -103,16 +103,20 @@ public final class PE3ECUCANBus {
         int[] data = new int[dataLength]; //Create data structure for message
         //INDEX MAPPING
         //[PE3ID, BUF1, BUF2, BUF3, BUF4, BUF5, BUF6, BUF7, BUF8
-        //message will look like 218099784,0,1,2,3,4,5,6,7,
+        //message will look like 218099784 0 1 2 3 4 5 6 7
 
         try{
             StringTokenizer st = new StringTokenizer(message); //Tokenize the message
             int ID = Integer.parseInt(st.nextToken(",")); //1st position is PE3 ID
             data[0] = ID; //Place ID at beginning of data structure
+            data[1] = message[4]; // First 4 bytes are ID bytes
+            data[2] = message[5];
+            data[3] = message[6];
+            data[4] = message[7];
+            data[5] = message[8];
+            data[7] = message[9];
+            data[8] = message[10];
 
-            for(int i = 1; i < dataLength; i++){ //Populate the data structure
-                data[i] = Integer.parseInt(st.nextToken(","));
-            }
         }catch(NumberFormatException nfe){
             Log.e("","COULD NOT PARSE DATA. BAD STRING====."+message);
         }
