@@ -22,7 +22,7 @@ void loop()
     unsigned char buf[8];
     long unsigned int ID;
     char PACKET_DELIM = 'M';
-    char DATA_DELIM = ',';
+
     if(CAN_MSGAVAIL == CAN.checkReceive())
     {
         CAN.readMsgBufID(&ID, &len, buf);//len: data length, buf: data buf
@@ -31,15 +31,14 @@ void loop()
           use the appropriate CAN group to update the ECU parameters
         */
         
-        //SEND DATA AS: 218099784,1,2,3,4,5,6,7,8,M - M tells BT where to end the packet
+        //SEND DATA AS: 218099784,1 2 3 4 5 6 7 8 M - M tells BT where to end the packet
         Serial.print(ID);
         Serial.print(DATA_DELIM);
         
         for(int i = 0; i < len; i++)
         {
-          Serial.print(buf[i]);
-          Serial.print(DATA_DELIM);
+          Serial.write(buf[i]);
         }
-        Serial.print(PACKET_DELIM);
+        Serial.write(PACKET_DELIM);
     }
 }
